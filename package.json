@@ -11,7 +11,8 @@
     "clean-dev": "gulp clean --develop",
     "clean": "gulp clean",
     "test": "jest ./test/* --silent --bail",
-    "coverage": "jest ./test/* --coverage --bail"
+    "coverage": "jest ./test/* --coverage --bail",
+    "lint-tools": "eslint tools/*"
   },
   "miniprogram": "miniprogram_dist",
   "jest": {

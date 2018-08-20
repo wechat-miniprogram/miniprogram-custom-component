@@ -9,7 +9,9 @@ beforeAll(async () => {
 
 test('render', async () => {
   component = _.render(componentId, {prop: 'index.test.properties'})
-  _.attach(component)
+
+  const parent = document.createElement('parent-wrapper')
+  component.attach(parent)
 
   expect(_.match(component.dom, '<wx-view class="index">index.test.properties</wx-view>')).toBe(true)
 })
