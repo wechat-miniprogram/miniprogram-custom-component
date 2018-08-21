@@ -12,7 +12,8 @@
     "clean": "gulp clean",
     "test": "jest ./test/* --silent --bail",
     "coverage": "jest ./test/* --coverage --bail",
-    "lint-tools": "eslint tools/*"
+    "lint": "eslint \"src/**/*.js\"",
+    "lint-tools": "eslint \"tools/**/*.js\" --rule \"import/no-extraneous-dependencies: false\""
   },
   "miniprogram": "miniprogram_dist",
   "jest": {
