@@ -1,6 +1,6 @@
 # 测试工具包
 
-test/utils.js 是一个可以在测试用例中使用的工具包。引入方法：
+test/utils.js 是一个可以在测试用例中使用的工具包。引入方式：
 
 ```js
 const _ = require('./utils')
