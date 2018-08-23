@@ -89,26 +89,7 @@ npm run test
 npm run coverage
 ```
 
-测试用例放在 test 目录下，其中 test/utils 是已封装好可在测试用例中使用的工具包，包含以下方法：
-
-* load(entry): 加载自定义组件，返回 componentId
-* render(componentId, properties): 渲染自定义组件，返回 component 实例
-* match(dom, html): 检查 dom 节点的内容是否符合给定的 html 结构
-* sleep(time): 延迟一定时间再执行后续代码
-
-component 实例的属性和方法
-
-* component.dom: component 实例的 dom 节点
-* component.attach(parent): 挂载在 parent dom 上
-* component.detach(): 从 parent dom 上移除
-* component.querySelector(selector): 获取符合给定 selector 的第一个节点，返回 componentNode 实例
-* component.querySelectorAll(selector): 获取符合给定 selector 的所有节点，返回 componentNode 实例列表
-* component.setData(data, callback): 调用组件的 setData 方法
-
-componentNode 实例的属性和方法
-
-* componentNode.dom: componentNode 实例的 dom 节点
-* componentNode.dispatchEvent(eventName, options): 触发 componentNode 实例的事件
+测试用例放在 test 目录下，其中 test/utils 是已封装好可在测试用例中使用的工具包，具体使用文档请[点击此处查看](./docs/test.md)。
 
 ## 其他命令
 

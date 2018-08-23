@@ -4,7 +4,7 @@ let componentId
 let component
 
 beforeAll(async () => {
-  componentId = await _.load('index')
+  componentId = await _.load('index', 'comp')
 })
 
 test('render', async () => {
