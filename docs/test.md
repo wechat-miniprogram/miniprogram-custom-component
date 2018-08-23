@@ -86,7 +86,7 @@ component.detach()
 
 #### querySelector
 
-获取符合给定匹配串的第一个节点，返回 componentNode 实例
+获取符合给定匹配串的第一个节点，返回 [componentNode](#componentnode) 实例
 
 ```js
 let compNode = comp.querySelector('#a'); // 选取组件树中的节点
@@ -94,7 +94,7 @@ let compNode = comp.querySelector('#a'); // 选取组件树中的节点
 
 #### querySelectorAll
 
-获取符合给定匹配串的所有节点，返回 componentNode 实例列表
+获取符合给定匹配串的所有节点，返回 [componentNode](#componentnode) 实例列表
 
 ```js
 let compNodes = comp.querySelectorAll('.a'); // 选取组件树中的节点
