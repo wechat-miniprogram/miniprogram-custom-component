@@ -139,3 +139,10 @@ compNode.dispatchEvent('customevent', {
   /* 其他 CustomEvent 构造器支持的 option */
 });
 ```
+
+## TODO
+
+* template、import、include 支持
+* 外链 wxs 支持
+* 抽象节点支持
+* ...

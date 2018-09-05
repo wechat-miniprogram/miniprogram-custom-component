@@ -62,5 +62,6 @@ module.exports = {
       assetFilter: assetFilename => assetFilename.endsWith('.js')
     }
   },
-  copy: ['./wxml', './wxss', './wxs', './images'],
+
+  copy: ['./wxml', './wxss', './wxs', './images'], // will copy to dist
 }
