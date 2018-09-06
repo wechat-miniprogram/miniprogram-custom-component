@@ -82,8 +82,9 @@ global.wx = {
 
   createMapContext: noop,
 
-  getSystemInfo(options) {
+  getSystemInfo(options = {}) {
     const res = {
+      errMsg: 'getSystemInfo:ok',
       SDKVersion: '2.3.0',
       batteryLevel: 100,
       benchmarkLevel: 1,
@@ -101,10 +102,20 @@ global.wx = {
       windowHeight: 672,
       windowWidth: 414,
     }
-    options.success && options.success(res)
-    options.complete && options.complete(res)
+    typeof options.success === 'function' && options.success(res)
+    typeof options.complete === 'function' && options.complete(res)
   },
-  getSystemInfoSync: noop,
+  getSystemInfoSync() {
+    let info = {}
+    wx.getSystemInfo({
+      success(res) {
+        info = res
+      }
+    })
+
+    delete info.errMsg
+    return info
+  },
   canIUse: noop,
 
   onMemoryWarning: noop,
