@@ -5,7 +5,7 @@
 ## 使用
 
 * 使用[命令行工具](https://github.com/wechat-miniprogram/miniprogram-cli)进行初始化
-* 直接从 github 上 clone 或者下载
+* 直接从 github 上 clone 下来
 
 ## 开发
 
