@@ -1,6 +1,6 @@
 module.exports = require('../tools/test/helper')
 
-const noop = () => {};
+const noop = () => {}
 
 global.wx = {
   request: noop,
@@ -83,8 +83,18 @@ global.wx = {
   createMapContext: noop,
 
   getSystemInfo(options = {}) {
+    const res = {...wx.getSystemInfoSync(), errMsg: 'getSystemInfo:ok'}
+    setTimeout(() => {
+      if (typeof options.success === 'function') {
+        options.success(res)
+      }
+      if (typeof options.complete === 'function') {
+        options.complete(res)
+      }
+    }, 0)
+  },
+  getSystemInfoSync() {
     const res = {
-      errMsg: 'getSystemInfo:ok',
       SDKVersion: '2.3.0',
       batteryLevel: 100,
       benchmarkLevel: 1,
@@ -100,21 +110,9 @@ global.wx = {
       system: 'iOS 10.0.1',
       version: '6.6.3',
       windowHeight: 672,
-      windowWidth: 414,
+      windowWidth: 414
     }
-    typeof options.success === 'function' && options.success(res)
-    typeof options.complete === 'function' && options.complete(res)
-  },
-  getSystemInfoSync() {
-    let info = {}
-    wx.getSystemInfo({
-      success(res) {
-        info = res
-      }
-    })
-
-    delete info.errMsg
-    return info
+    return res
   },
   canIUse: noop,
 
@@ -284,6 +282,6 @@ global.wx = {
   getLogManager: noop,
 
   reportMonitor: noop,
-  
-  setEnableDebug: noop,
+
+  setEnableDebug: noop
 }
