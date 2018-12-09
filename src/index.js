@@ -5,12 +5,16 @@ Component({
       value: 'index.properties'
     },
   },
+  data: {
+    flag: false,
+  },
   lifetimes: {
     attached() {
       wx.getSystemInfo({
-        success(res) {
-          // eslint-disable-next-line no-console
-          console.log(res)
+        success: res => {
+          this.setData({
+            flag: true,
+          })
         }
       })
     }
