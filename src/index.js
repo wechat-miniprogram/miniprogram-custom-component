@@ -11,7 +11,7 @@ Component({
   lifetimes: {
     attached() {
       wx.getSystemInfo({
-        success: res => {
+        success: () => {
           this.setData({
             flag: true,
           })
