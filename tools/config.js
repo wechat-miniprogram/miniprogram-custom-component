@@ -63,5 +63,5 @@ module.exports = {
     }
   },
 
-  copy: ['./wxml', './wxss', './wxs', './images'], // 将会复制到目标目录
+  copy: ['./images'], // 将会复制到目标目录
 }

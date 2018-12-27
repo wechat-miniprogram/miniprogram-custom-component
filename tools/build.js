@@ -11,6 +11,7 @@ const gulpInstall = require('gulp-install')
 
 const config = require('./config')
 const checkComponents = require('./checkcomponents')
+const checkWxss = require('./checkwxss')
 const _ = require('./utils')
 
 const wxssConfig = config.wxss || {}
@@ -24,8 +25,10 @@ function wxss(wxssFileList) {
   if (!wxssFileList.length) return false
 
   return gulp.src(wxssFileList, {cwd: srcPath, base: srcPath})
+    .pipe(checkWxss.start()) // 开始处理 import
     .pipe(gulpif(wxssConfig.less && wxssConfig.sourcemap, sourcemaps.init()))
     .pipe(gulpif(wxssConfig.less, less({paths: [srcPath]})))
+    .pipe(checkWxss.end()) // 结束处理 import
     .pipe(rename({extname: '.wxss'}))
     .pipe(gulpif(wxssConfig.less && wxssConfig.sourcemap, sourcemaps.write('./')))
     .pipe(_.logger(wxssConfig.less ? 'generate' : undefined))

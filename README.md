@@ -1,6 +1,12 @@
 # miniprogram-custom-component
 
-小程序自定义组件脚手架
+小程序自定义组件开发模板：
+
+* 支持 less 编写 wxss
+* 使用 webpack 构建 js
+* 支持自定义组件单元测试
+* 支持 eslint
+* 支持多入口构建
 
 ## 使用
 
@@ -73,12 +79,8 @@ npm publish
 |--miniprogram_dev // 开发环境构建目录
 |--miniprogram_dist // 生产环境构建目录
 |--src // 源码
-|   |--common // 通用 js 模块
 |   |--components // 通用自定义组件
 |   |--images // 图片资源
-|   |--wxml // 通用 wxml 模版资源
-|   |--wxs // 通用 wxs 资源
-|   |--wxss // 通用 wxss 资源
 |   |
 |   |--xxx.js/xxx.wxml/xxx.json/xxx.wxss // 暴露的 js 模块/自定义组件入口文件
 |
