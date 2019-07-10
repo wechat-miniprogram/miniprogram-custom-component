@@ -6,7 +6,7 @@ const config = require('../tools/config')
 const srcPath = config.srcPath
 const oldLoad = simulate.load
 simulate.load = function (componentPath, ...args) {
-  componentPath = path.join(srcPath, componentPath)
+  if (typeof componentPath === 'string') componentPath = path.join(srcPath, componentPath)
   return oldLoad(componentPath, ...args)
 }
 
