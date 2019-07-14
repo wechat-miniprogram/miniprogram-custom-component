@@ -102,6 +102,12 @@ npm publish
 npm run test
 ```
 
+* 执行测试用例并进入 node inspect 调试：
+
+```
+npm run test-debug
+```
+
 * 检测覆盖率：
 
 ```
