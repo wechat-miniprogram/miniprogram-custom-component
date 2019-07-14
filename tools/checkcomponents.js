@@ -23,11 +23,14 @@ function getJsonPathInfo(jsonPath) {
  * 检测是否包含其他自定义组件
  */
 const checkProps = ['usingComponents', 'componentGenerics']
+const hasCheckMap = {}
 async function checkIncludedComponents(jsonPath, componentListMap) {
   const json = _.readJson(jsonPath)
   if (!json) throw new Error(`json is not valid: "${jsonPath}"`)
 
   const {dirPath, fileName, fileBase} = getJsonPathInfo(jsonPath)
+  if (hasCheckMap[fileBase]) return
+  hasCheckMap[fileBase] = true
 
   for (let i = 0, len = checkProps.length; i < len; i++) {
     const checkProp = checkProps[i]
@@ -43,10 +46,8 @@ async function checkIncludedComponents(jsonPath, componentListMap) {
 
       // 检查相对路径
       const componentPath = `${path.join(dirPath, value)}.json`
-      // eslint-disable-next-line no-await-in-loop
       const isExists = await _.checkFileExists(componentPath)
       if (isExists) {
-        // eslint-disable-next-line no-await-in-loop
         await checkIncludedComponents(componentPath, componentListMap)
       }
     }

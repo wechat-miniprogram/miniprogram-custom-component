@@ -165,7 +165,6 @@ class BuildTask {
       for (let i = 0, len = entries.length; i < len; i++) {
         let entry = entries[i]
         entry = path.join(srcPath, `${entry}.json`)
-        // eslint-disable-next-line no-await-in-loop
         const newComponentListMap = await checkComponents(entry)
 
         _.merge(mergeComponentListMap, newComponentListMap)
@@ -265,8 +264,10 @@ class BuildTask {
         try {
           if (fs.statSync(path.join(srcPath, copyFilePath)).isDirectory()) {
             return path.join(copyFilePath, '**/*.wxss')
-          } else {
+          } else if (copyFilePath.slice(-5) === '.wxss') {
             return copyFilePath
+          } else {
+            return null
           }
         } catch (err) {
           // eslint-disable-next-line no-console

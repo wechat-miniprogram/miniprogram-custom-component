@@ -81,7 +81,10 @@ module.exports = {
     'semi': [
       'error',
       'never'
-    ]
+    ],
+    'no-await-in-loop': 'off',
+    'no-restricted-syntax': 'off',
+    'promise/always-return': 'off',
   },
   'globals': {
     'window': true,

@@ -31,7 +31,7 @@ async function getContent(wxss, filePath, cwd) {
 
   if (wxss) {
     const currentImportList = getImportList(wxss, filePath)
-    
+
     for (const item of currentImportList) {
       // 替换掉 import 语句，不让 less 编译
       wxss = wxss.replace(item.code, `/* *updated for miniprogram-custom-component* ${item.code} */`)
@@ -61,18 +61,19 @@ module.exports = {
     return through.obj(function (file, enc, cb) {
       if (file.isBuffer()) {
         getContent(file.contents.toString('utf8'), file.path, file.cwd).then(res => {
-          const { wxss, importList } = res
+          const {wxss, importList} = res
 
           importList.forEach(importFile => this.push(importFile))
 
           file.contents = Buffer.from(wxss, 'utf8')
           this.push(file)
+          // eslint-disable-next-line promise/no-callback-in-promise
           cb()
         }).catch(err => {
           // eslint-disable-next-line no-console
-          
           console.warn(`deal with ${file.path} failed: ${err.stack}`)
           this.push(file)
+          // eslint-disable-next-line promise/no-callback-in-promise
           cb()
         })
       } else {
