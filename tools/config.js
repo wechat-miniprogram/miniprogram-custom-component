@@ -27,6 +27,10 @@ module.exports = {
     sourcemap: false, // 生成 less sourcemap
   },
 
+  js: {
+    webpack: true, // 使用 webpack 来构建 js
+  },
+
   webpack: {
     mode: 'production',
     output: {
@@ -63,5 +67,5 @@ module.exports = {
     }
   },
 
-  copy: ['./images'], // 将会复制到目标目录
+  copy: ['./assets', './utils.js'], // 将会复制到目标目录
 }

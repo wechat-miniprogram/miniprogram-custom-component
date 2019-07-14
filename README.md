@@ -40,7 +40,7 @@ npm run watch
 4. 进阶：
 
 * 如果有额外的构建需求，可自行修改 tools 目录中的构建脚本。
-* 内置支持 less、sourcemap 等功能，默认关闭。如若需要可以自行修改 tools/config.js 配置文件中相关配置。
+* 内置支持 webpack、less、sourcemap 等功能，默认关闭。如若需要可以自行修改 tools/config.js 配置文件中相关配置。
 * 内置支持多入口构建，如若需要可自行调整 tools/config.js 配置文件的 entry 字段。
 * 默认开启 eslint，可自行调整规则或在 tools/config.js 中注释掉 eslint-loader 行来关闭此功能。
 

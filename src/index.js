@@ -1,3 +1,5 @@
+const _ = require('./utils')
+
 Component({
   properties: {
     prop: {
@@ -13,7 +15,7 @@ Component({
       wx.getSystemInfo({
         success: () => {
           this.setData({
-            flag: true,
+            flag: _.getFlag(),
           })
         }
       })

@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 
 const gulp = require('gulp')
 const clean = require('gulp-clean')
@@ -14,6 +15,7 @@ const checkComponents = require('./checkcomponents')
 const checkWxss = require('./checkwxss')
 const _ = require('./utils')
 
+const jsConfig = config.js || {}
 const wxssConfig = config.wxss || {}
 const srcPath = config.srcPath
 const distPath = config.distPath
@@ -225,7 +227,11 @@ class BuildTask {
       if (jsFileList &&
         jsFileList.length &&
         !_.compareArray(this.cachedComponentListMap.jsFileList, jsFileList)) {
-        js(this.componentListMap.jsFileMap, this)
+        if (jsConfig.webpack) {
+          js(this.componentListMap.jsFileMap, this)
+        } else {
+          return copy(jsFileList)
+        }
       }
 
       return done()
@@ -236,19 +242,54 @@ class BuildTask {
      */
     gulp.task(`${id}-copy`, gulp.parallel(done => {
       const copyList = this.copyList
-      const copyFileList = copyList.map(dir => path.join(dir, '**/*.!(wxss)'))
+      const copyFileList = copyList.map(copyFilePath => {
+        try {
+          if (fs.statSync(path.join(srcPath, copyFilePath)).isDirectory()) {
+            return path.join(copyFilePath, '**/*.!(wxss)')
+          } else {
+            return copyFilePath
+          }
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err)
+          return null
+        }
+      }).filter(copyFilePath => !!copyFilePath)
 
       if (copyFileList.length) return copy(copyFileList)
 
       return done()
     }, done => {
       const copyList = this.copyList
-      const copyFileList = copyList.map(dir => path.join(dir, '**/*.wxss'))
+      const copyFileList = copyList.map(copyFilePath => {
+        try {
+          if (fs.statSync(path.join(srcPath, copyFilePath)).isDirectory()) {
+            return path.join(copyFilePath, '**/*.wxss')
+          } else {
+            return copyFilePath
+          }
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err)
+          return null
+        }
+      }).filter(copyFilePath => !!copyFilePath)
 
       if (copyFileList.length) return wxss(copyFileList, srcPath, distPath)
 
       return done()
     }))
+
+    /**
+     * 监听 js 变化
+     */
+    gulp.task(`${id}-watch-js`, done => {
+      if (!jsConfig.webpack) {
+        return gulp.watch(this.componentListMap.jsFileList, {cwd: srcPath, base: srcPath}, gulp.series(`${id}-component-js`))
+      }
+
+      return done()
+    })
 
     /**
      * 监听 json 变化
@@ -276,7 +317,19 @@ class BuildTask {
      */
     gulp.task(`${id}-watch-copy`, () => {
       const copyList = this.copyList
-      const copyFileList = copyList.map(dir => path.join(dir, '**/*'))
+      const copyFileList = copyList.map(copyFilePath => {
+        try {
+          if (fs.statSync(path.join(srcPath, copyFilePath)).isDirectory()) {
+            return path.join(copyFilePath, '**/*')
+          } else {
+            return copyFilePath
+          }
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err)
+          return null
+        }
+      }).filter(copyFilePath => !!copyFilePath)
       const watchCallback = filePath => copy([filePath])
 
       return gulp.watch(copyFileList, {cwd: srcPath, base: srcPath})
@@ -310,7 +363,7 @@ class BuildTask {
      */
     gulp.task(`${id}-build`, gulp.series(`${id}-clean-dist`, `${id}-component-check`, gulp.parallel(`${id}-component-wxml`, `${id}-component-wxss`, `${id}-component-js`, `${id}-component-json`, `${id}-copy`)))
 
-    gulp.task(`${id}-watch`, gulp.series(`${id}-build`, `${id}-demo`, `${id}-install`, gulp.parallel(`${id}-watch-wxml`, `${id}-watch-wxss`, `${id}-watch-json`, `${id}-watch-copy`, `${id}-watch-install`, `${id}-watch-demo`)))
+    gulp.task(`${id}-watch`, gulp.series(`${id}-build`, `${id}-demo`, `${id}-install`, gulp.parallel(`${id}-watch-wxml`, `${id}-watch-wxss`, `${id}-watch-js`, `${id}-watch-json`, `${id}-watch-copy`, `${id}-watch-install`, `${id}-watch-demo`)))
 
     gulp.task(`${id}-dev`, gulp.series(`${id}-build`, `${id}-demo`, `${id}-install`))
 
