@@ -3,6 +3,8 @@ module.exports = {
     'airbnb-base',
     'plugin:promise/recommended'
   ],
+  'parser': '@typescript-eslint/parser',
+  'plugins': ['@typescript-eslint'],
   'parserOptions': {
     'ecmaVersion': 9,
     'ecmaFeatures': {

@@ -1,0 +1,1 @@
+<view class="index other">{{prop}}-{{name}}</view>

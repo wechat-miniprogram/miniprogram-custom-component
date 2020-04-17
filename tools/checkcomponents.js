@@ -53,13 +53,20 @@ async function checkIncludedComponents(jsonPath, componentListMap) {
     }
   }
 
+  const wholeFileBase = path.join(dirPath, fileName)
+  let jsExt = '.js'
+  const isJsFileExists = await _.checkFileExists(wholeFileBase + '.ts')
+  if (isJsFileExists) {
+    jsExt = '.ts'
+  }
+
   // 进入存储
   componentListMap.wxmlFileList.push(`${fileBase}.wxml`)
   componentListMap.wxssFileList.push(`${fileBase}.wxss`)
   componentListMap.jsonFileList.push(`${fileBase}.json`)
-  componentListMap.jsFileList.push(`${fileBase}.js`)
+  componentListMap.jsFileList.push(`${fileBase}${jsExt}`)
 
-  componentListMap.jsFileMap[fileBase] = `${path.join(dirPath, fileName)}.js`
+  componentListMap.jsFileMap[fileBase] = `${wholeFileBase}${jsExt}`
 }
 
 module.exports = async function (entry) {
@@ -76,8 +83,14 @@ module.exports = async function (entry) {
   if (!isExists) {
     const {dirPath, fileName, fileBase} = getJsonPathInfo(entry)
 
-    componentListMap.jsFileList.push(`${fileBase}.js`)
-    componentListMap.jsFileMap[fileBase] = `${path.join(dirPath, fileName)}.js`
+    const wholeFileBase = path.join(dirPath, fileName)
+    let jsExt = '.js'
+    const isJsFileExists = await _.checkFileExists(wholeFileBase + '.ts')
+    if (isJsFileExists) {
+      jsExt = '.ts'
+    }
+    componentListMap.jsFileList.push(`${fileBase}${jsExt}`)
+    componentListMap.jsFileMap[fileBase] = `${wholeFileBase}${jsExt}`
 
     return componentListMap
   }

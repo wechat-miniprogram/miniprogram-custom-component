@@ -7,9 +7,9 @@ test('render', async () => {
   const parent = document.createElement('parent-wrapper')
   component.attach(parent)
 
-  expect(_.match(component.dom, '<wx-view class="comp--index comp--other">index.test.properties-false</wx-view>')).toBe(true)
+  expect(_.match(component.dom, '<wx-view class="comp--index comp--other">index.test.properties-false</wx-view><other><wx-view class="other--index other--other">other.properties-other</wx-view></other>')).toBe(true)
 
   await _.sleep(10)
 
-  expect(_.match(component.dom, '<wx-view class="comp--index comp--other">index.test.properties-true</wx-view>')).toBe(true)  
+  expect(_.match(component.dom, '<wx-view class="comp--index comp--other">index.test.properties-true</wx-view><other><wx-view class="other--index other--other">other.properties-other</wx-view></other>')).toBe(true)  
 })
