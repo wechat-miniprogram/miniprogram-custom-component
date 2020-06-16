@@ -180,9 +180,7 @@ class BuildTask {
     gulp.task(`${id}-component-json`, done => {
       const jsonFileList = this.componentListMap.jsonFileList
 
-      if (jsonFileList && jsonFileList.length) {
-        return copy(this.componentListMap.jsonFileList)
-      }
+      if (jsonFileList && jsonFileList.length) return copy(jsonFileList)
 
       return done()
     })

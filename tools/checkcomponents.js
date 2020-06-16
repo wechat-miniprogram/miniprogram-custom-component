@@ -4,6 +4,7 @@ const _ = require('./utils')
 const config = require('./config')
 
 const srcPath = config.srcPath
+let hasCheckCompoenntMap = {}
 
 /**
  * 获取 json 路径相关信息
@@ -23,14 +24,13 @@ function getJsonPathInfo(jsonPath) {
  * 检测是否包含其他自定义组件
  */
 const checkProps = ['usingComponents', 'componentGenerics']
-const hasCheckMap = {}
 async function checkIncludedComponents(jsonPath, componentListMap) {
   const json = _.readJson(jsonPath)
   if (!json) throw new Error(`json is not valid: "${jsonPath}"`)
 
   const {dirPath, fileName, fileBase} = getJsonPathInfo(jsonPath)
-  if (hasCheckMap[fileBase]) return
-  hasCheckMap[fileBase] = true
+  if (hasCheckCompoenntMap[fileBase]) return
+  hasCheckCompoenntMap[fileBase] = true
 
   for (let i = 0, len = checkProps.length; i < len; i++) {
     const checkProp = checkProps[i]
@@ -95,6 +95,7 @@ module.exports = async function (entry) {
     return componentListMap
   }
 
+  hasCheckCompoenntMap = {}
   await checkIncludedComponents(entry, componentListMap)
 
   return componentListMap
