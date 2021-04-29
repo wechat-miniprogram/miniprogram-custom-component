@@ -13,9 +13,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "files": [
-    "node_modules/miniprogram-api-typings/index.d.ts"
-  ],
   "include": [
     "src/**/*.ts"
   ],
